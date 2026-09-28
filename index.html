@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Charlie Arcade</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #10131a;
+  color: white;
+  text-align: center;
+}
+
+h1 {
+  font-size: 32px;
+  margin: 25px 0 5px;
+}
+
+.subtitle {
+  color: #aaa;
+  margin-bottom: 25px;
+}
+
+#games {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  max-width: 650px;
+  margin: auto;
+  padding: 15px;
+}
+
+.gameButton {
+  border: none;
+  border-radius: 18px;
+  padding: 22px 10px;
+  background: #202737;
+  color: white;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.gameButton:hover {
+  background: #303b52;
+}
+
+#gameScreen {
+  display: none;
+  max-width: 650px;
+  margin: auto;
+  padding: 20px;
+}
+
+.back {
+  background: #39445a;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 20px;
+  font-size: 16px;
+}
+
+.gameBox {
+  background: #171c27;
+  border-radius: 20px;
+  padding: 25px;
+  margin-top: 15px;
+}
+
+.playButton {
+  background: #2979ff;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  padding: 18px 30px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.score {
+  font-size: 28px;
+  margin: 20px;
+}
+
+canvas {
+  width: 100%;
+  max-width: 600px;
+  background: #05070a;
+  border-radius: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🎮 Charlie Arcade</h1>
+<p class="subtitle">20 Offline Games</p>
+
+<div id="games"></div>
+
+<div id="gameScreen">
+  <button class="back" onclick="backToMenu()">← Game Library</button>
+
+  <div class="gameBox">
+    <h2 id="gameTitle"></h2>
+
+    <div id="gameContent"></div>
+
+    <div class="score" id="score">Score: 0</div>
+
+    <button class="playButton" onclick="playGame()">
+      PLAY
+    </button>
+  </div>
+</div>
+
+<script>
+
+const games = [
+  ["🏎️", "Car Dodge"],
+  ["⚽", "Penalty Kick"],
+  ["🏀", "Basketball"],
+  ["🧱", "Breakout"],
+  ["🐦", "Sky Hopper"],
+  ["🧠", "Memory Match"],
+  ["❌", "Tic-Tac-Toe"],
+  ["🐍", "Snake"],
+  ["🏓", "Pong"],
+  ["🚀", "Space Shooter"],
+  ["🪙", "Coin Catch"],
+  ["🔢", "2048"],
+  ["🏃", "Endless Runner"],
+  ["🎯", "Target Tap"],
+  ["🧟", "Zombie Dodge"],
+  ["🛣️", "Endless Highway"],
+  ["🏰", "Tower Defense"],
+  ["🧊", "Falling Blocks"],
+  ["🎈", "Balloon Pop"],
+  ["🥅", "Goalkeeper"]
+];
+
+const gamesDiv = document.getElementById("games");
+
+games.forEach((game, index) => {
+
+  const button = document.createElement("button");
+
+  button.className = "gameButton";
+
+  button.innerHTML = game[0] + "<br>" + game[1];
+
+  button.onclick = function() {
+    openGame(index);
+  };
+
+  gamesDiv.appendChild(button);
+
+});
+
+let currentGame = 0;
+let score = 0;
+
+function openGame(index) {
+
+  currentGame = index;
+
+  document.getElementById("games").style.display = "none";
+
+  document.getElementById("gameScreen").style.display = "block";
+
+  document.getElementById("gameTitle").textContent =
+    games[index][0] + " " + games[index][1];
+
+  document.getElementById("score").textContent = "Score: 0";
+
+  document.getElementById("gameContent").innerHTML =
+    "<p>Ready?</p>";
+}
+
+function backToMenu() {
+
+  document.getElementById("gameScreen").style.display = "none";
+
+  document.getElementById("games").style.display = "grid";
+}
+
+function playGame() {
+
+  score++;
+
+  document.getElementById("score").textContent =
+    "Score: " + score;
+
+  const messages = [
+    "Nice!",
+    "Keep going!",
+    "Great job!",
+    "🔥",
+    "Let's go!",
+    "You got this!"
+  ];
+
+  document.getElementById("gameContent").innerHTML =
+    "<p>" + messages[Math.floor(Math.random() * messages.length)] + "</p>";
+}
+
+</script>
+
+</body>
+</html>
